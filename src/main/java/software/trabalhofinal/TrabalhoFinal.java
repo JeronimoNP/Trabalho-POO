@@ -27,8 +27,8 @@ public class TrabalhoFinal extends JFrame implements Runnable, KeyListener{
     boolean exe = true;
     int pontuacao = 0;
     int numeroDeVidas = 5;
-    int larguraDaTela = 600; //Toolkit.getDefaultToolkit().getScreenSize().width;
-    int alturaDaTela = 800; //Toolkit.getDefaultToolkit().getScreenSize().height;
+    int larguraDaTela = 600;
+    int alturaDaTela = 800; 
     int x1 = 100,
             y1 = 0,
             h1 = 100,
@@ -248,15 +248,11 @@ public class TrabalhoFinal extends JFrame implements Runnable, KeyListener{
     }
 
 
-
     @Override
     public void keyReleased(KeyEvent e) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
-
-
-    // Inicia a reprodução da música
 
 
 }
