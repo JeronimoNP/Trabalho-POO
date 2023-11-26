@@ -7,6 +7,9 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 import javax.swing.*;
@@ -14,8 +17,8 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 
-public class TrabalhoFinal extends JFrame implements Runnable, KeyListener{
-
+public class TrabalhoFinal extends JFrame implements Runnable, KeyListener, MouseListener, MouseMotionListener{
+    
     int x1Old = 0;
     int y1Old = 0;
     int x2Old = 0;
@@ -57,9 +60,6 @@ public class TrabalhoFinal extends JFrame implements Runnable, KeyListener{
         imagemFim[0] = imgfim[0].getImage();
         backp[0] = new ImageIcon(localDaImagem+"\\back.jpg");
         back[0] = backp[0].getImage(); 
-        //music
-        
-        
         t = new Thread(this);
        
         setSize(larguraDaTela, alturaDaTela);
@@ -68,6 +68,7 @@ public class TrabalhoFinal extends JFrame implements Runnable, KeyListener{
         setResizable(false);
         showNotify();
         addKeyListener(this);
+        addMouseListener(this);
         
     }
     
@@ -80,13 +81,22 @@ public class TrabalhoFinal extends JFrame implements Runnable, KeyListener{
     public void hideNotify(){
         exe = false;
         t.start();
-        
     }
     
+    public void pause(){
+        exe = false;
+        int resposta = JOptionPane.showOptionDialog(null, "Pause, deseja continuar ou sair?", null, JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null); 
+        if(resposta == JOptionPane.YES_OPTION){
+            exe = true;
+            t = new Thread(this); // Criar uma nova instância da thread
+            t.start();                 // Iniciar a nova thread
+        } else {
+            System.exit(0);
+        }
+}
     
-    public void paint(Graphics g){
-        
-        
+    
+    public void paint(Graphics g){  
 
     BufferedImage buffer = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
     Graphics2D g2 = buffer.createGraphics();
@@ -110,6 +120,7 @@ public class TrabalhoFinal extends JFrame implements Runnable, KeyListener{
 
     g2.setColor(Color.GREEN);
     g2.drawString("Pontuação: " + String.valueOf(pontuacao), 10, 50);
+    
     g2.drawString("Vidas: " + String.valueOf(numeroDeVidas), 10, 75);
 
     //copia o buffer para a tela
@@ -121,16 +132,13 @@ public class TrabalhoFinal extends JFrame implements Runnable, KeyListener{
         TrabalhoFinal a = new TrabalhoFinal(); 
         a.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
-    
-
-
 
     
     @Override
     public void run() {
         int y11 = 10;
         int y22 = 10;
-        
+
         while(exe){
             //buffer para não ficar piscando por causa da atualização do jogo
             repaint();
@@ -190,21 +198,15 @@ public class TrabalhoFinal extends JFrame implements Runnable, KeyListener{
                }else{
                    System.exit(0);
                }
-               
-              
-               
-               
+     
             }
             //condição para quando o jogador perder todas as vidas ele perder o jogo
             if(numeroDeVidas <= 0){
                exe = false;
+               
 
                JOptionPane optionPane = new JOptionPane(); 
                optionPane.setMessage("Você perdeu!");
-               
-               
-                Object[] options = {"Sim", "Não"};
-                optionPane.setOptions(options);
                
                
                int resposta = optionPane.showOptionDialog(null, "Você ganhou! Deseja recomeçar?", null, JOptionPane.YES_NO_OPTION,JOptionPane.PLAIN_MESSAGE, null, null, null); 
@@ -219,6 +221,9 @@ public class TrabalhoFinal extends JFrame implements Runnable, KeyListener{
                    System.exit(0);
                }
             }
+            //pause
+
+        
         }
     }
     
@@ -250,6 +255,41 @@ public class TrabalhoFinal extends JFrame implements Runnable, KeyListener{
 
     @Override
     public void keyReleased(KeyEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+               pause();
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        //nada aqui
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
